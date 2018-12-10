@@ -204,8 +204,13 @@ void inject_file(NSString* file, NSString* _dylib)
 
 int main(int argc, const char * argv[])
 {
-    NSString* binary = [NSString stringWithUTF8String:argv[1]];
-    NSString* dylib = [NSString stringWithUTF8String:argv[2]];
+    if (argv[1] == NULL || argv[2] == NULL)
+    {
+        NSLog(@"缺少参数!");
+        return 0;
+    }
+    NSString* binary = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
+    NSString* dylib = [NSString stringWithCString:argv[2] encoding:NSUTF8StringEncoding];
     DYLIB_PATH = [NSString stringWithFormat:@"@executable_path/%@", dylib];
     NSLog(@"dylib path %@", DYLIB_PATH);
     
